@@ -744,7 +744,4 @@ within a single coherent deep learning research project.
 Readme is produced by GPT, Check the important info
 
 
-* ---
-!!! ReadMe was produced using ChatGPT. Check important information again before using !!!
-
 
