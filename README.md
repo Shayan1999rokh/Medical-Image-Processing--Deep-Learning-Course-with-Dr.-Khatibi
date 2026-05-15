@@ -1,6 +1,3 @@
-This is a more comprehensive, professional, and industry-standard README designed to showcase the technical depth of your project. It includes detailed sections for installation, results, and architecture to make your GitHub profile stand out.
-
----
 
 # Deep Learning for Pulmonary Diagnostics: From Classification to Generative Modeling
 
