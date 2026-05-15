@@ -738,7 +738,9 @@ This project was designed not only to achieve strong medical image classificatio
 * GANs
 * AutoEncoders
 
+within a single coherent deep learning research project.
+
 * ---
 !!! ReadMe was produced using ChatGPT. It is correct but check the important information again before using !!!
 
-within a single coherent deep learning research project.
+
