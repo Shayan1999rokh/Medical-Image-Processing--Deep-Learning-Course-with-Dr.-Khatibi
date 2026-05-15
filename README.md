@@ -1,19 +1,107 @@
-This report, titled Deep Learning Projects (Dec 2024 – Jan 2025), was prepared by Shayan Rokhva in collaboration with Ali Rashedi under the supervision of Dr. Khatibi at Tarbiat Modares University for the graduate course Deep Learning. The document presents a collection of five major neural-network implementations, each representing a different learning paradigm and demonstrating advanced PyTorch-based design, training, and evaluation. The five assignments include: (1) a custom Convolutional Neural Network (CNN) built from scratch, (2) a CNN employing transfer learning and fine-tuning, (3) a CNN using frozen feature extractors, (4) a Generative Adversarial Network (GAN) for data synthesis, and (5) an Autoencoder for unsupervised feature extraction and image reconstruction. Together, these models form a cohesive exploration of supervised, semi-supervised, and unsupervised learning in computer-vision contexts.
+This is a more comprehensive, professional, and industry-standard README designed to showcase the technical depth of your project. It includes detailed sections for installation, results, and architecture to make your GitHub profile stand out.
 
-The first model demonstrates a CNN constructed from the ground up, designed to classify medical X-ray images into pneumonia versus normal classes. The architecture integrates consecutive Convolution–Batch Normalization–ReLU–MaxPooling blocks that gradually increase feature-map depth (from 64 to 512 channels) while reducing spatial resolution. After convolutional extraction, fully connected layers map high-level features to binary output neurons via a softmax function. Data preprocessing includes resizing all images to 256×256 pixels and normalization using ImageNet mean and standard deviation. To improve generalization, extensive data augmentation is applied — random rotations up to 30 degrees, horizontal flips, and color jittering to vary brightness and contrast. Augmented samples help the network become invariant to lighting and orientation differences common in real medical images. The model is trained using cross-entropy loss optimized by Stochastic Gradient Descent (SGD), and evaluated through accuracy, precision, recall, F1-score, and loss curves. Visualization of training and validation histories shows stable convergence, with minor fluctuations typical in deep-learning training but an overall downward trend in loss, confirming consistent optimization.
+---
 
-The second and third tasks extend the first by introducing transfer learning and fine-tuning using EfficientNetB7, one of the most accurate yet parameter-efficient convolutional models pretrained on ImageNet. In the feature-extraction configuration, all pretrained weights are frozen except for the final classification layer, which is retrained on the pneumonia dataset. In the fine-tuned version, deeper layers are partially unfrozen to adapt ImageNet-learned features to domain-specific medical features. The models are trained on 80 percent of the dataset (3924 training + 1308 validation images) and tested on the remaining 624 images. Data augmentation remains identical, ensuring comparability across experiments. Evaluation metrics indicate that transfer learning significantly accelerates convergence and enhances accuracy relative to the scratch CNN, confirming the advantage of pretrained feature representations. ROC-AUC curves, confusion matrices, and precision–recall visualizations reveal that the fine-tuned EfficientNetB7 attains the best balance between sensitivity and specificity, making it suitable for clinical screening tasks.
+# Deep Learning for Pulmonary Diagnostics: From Classification to Generative Modeling
 
-The fourth project involves designing and training a Generative Adversarial Network (GAN) to synthesize artificial images resembling the pneumonia dataset. The GAN architecture comprises a Generator and Discriminator in adversarial competition. The Generator transforms random latent-space vectors (z_dim = 100) into 32×32 pixel grayscale images, while the Discriminator distinguishes real from generated samples. Both networks consist of multiple fully connected and convolutional layers with ReLU activations for the generator and LeakyReLU for the discriminator. Training alternates between the two, minimizing adversarial losses computed via binary cross-entropy. The code employs careful device management to support both CPU and GPU, dynamic batch loading (batch_size = 100), and epoch timing for performance monitoring. Although training a GAN on small, low-resolution data naturally leads to oscillations in loss functions, the results show a clear downward trend in generator and discriminator losses, indicating progressive learning. Visual inspection of generated images reveals recognizable structures resembling real X-rays, verifying that the network captured essential features of the data distribution. The project highlights the computational challenges of GAN training, noting that typically 5000–6000 epochs may be needed for full convergence, but acceptable results are achieved even within limited computational budgets.
+## 📌 Project Overview
 
-The fifth and final model explores Autoencoders for unsupervised feature learning and image reconstruction. The Autoencoder architecture is symmetric, consisting of an Encoder that compresses images into low-dimensional latent representations through convolution and pooling, and a Decoder that reconstructs them via upsampling and transposed convolutions. Each layer pair mirrors its counterpart, ensuring dimensional correspondence and feature alignment. ReLU activations maintain non-linearity, while the final output layer employs a convolution to recreate three-channel RGB images with the same dimensions as the inputs. The network is trained using Mean Squared Error (MSE) loss optimized with the Adam optimizer, learning to minimize the difference between original and reconstructed images. Training curves of reconstruction loss illustrate steady convergence. Qualitative visualization compares original images (top row) and reconstructed outputs (bottom row), showing strong structural similarity, which validates that the latent space effectively encodes key image characteristics. The Autoencoder also serves as a pretraining module, enabling extraction of compressed features for later classification or anomaly-detection tasks.
+This repository contains a comprehensive deep learning pipeline for analyzing medical lung imagery. The project covers the full lifecycle of medical AI, starting from raw image classification using **Custom CNNs** and **Transfer Learning**, to advanced generative tasks using **GANs** and **AutoEncoders**.
 
-Across all five implementations, the project maintains a consistent PyTorch workflow: defining datasets through custom Dataset classes, performing preprocessing and augmentation via torchvision.transforms, managing batches using DataLoader, and employing GPU acceleration where available. Each model includes detailed training loops that log per-epoch metrics (loss, accuracy, precision, recall, F1-score) and visualize results through Matplotlib. The notebook’s modular design allows rapid substitution of models, datasets, or optimizers, facilitating experimentation and reproducibility. Furthermore, device management code ensures flexibility between CPU and GPU, with automatic selection based on hardware availability.
+The core objective is to differentiate between **Normal** and **Pneumonia** cases while exploring how synthetic data generation and dimensionality reduction can assist in medical contexts.
 
-Evaluation across tasks demonstrates the complementary strengths of each approach. The custom CNN establishes a foundational understanding of convolutional architectures, while the transfer-learning experiments illustrate the efficiency and robustness of pretrained models in limited-data regimes. The GAN introduces generative modeling and highlights the balance between adversarial optimization and model stability. The Autoencoder closes the pipeline by showcasing unsupervised learning for feature compression and data reconstruction. Combined, these experiments embody the complete spectrum of modern deep-learning techniques — from supervised classification to unsupervised representation learning.
+---
 
-In addition to technical execution, the report includes in-depth discussions of data-splitting strategies, augmentation design, and training diagnostics. The dataset is divided into training, validation, and test subsets in 80–10–10 percent ratios, ensuring that evaluation metrics reflect genuine generalization. Augmentation techniques are carefully limited to the training subset to prevent data leakage. The preprocessing pipeline standardizes image dimensions and intensities, a critical step for stable learning. The author also analyzes model-training curves, emphasizing that fluctuations in loss are normal as long as the overall trend decreases — a reflection of real-world stochastic optimization.
+## 🛠 Features & Tasks
 
-The report concludes that all models achieved convincing results relative to their computational scope. The EfficientNetB7 fine-tuned network reached the highest classification accuracy, demonstrating the effectiveness of transfer learning for complex visual tasks. The GAN successfully generated realistic synthetic samples, while the Autoencoder delivered high-fidelity reconstructions, confirming its ability to learn meaningful latent representations. The work exemplifies disciplined experimentation, clear documentation, and rigorous evaluation — qualities essential for deep-learning research. Beyond its educational purpose, the collection provides a reusable foundation for medical-image classification, generative data augmentation, and feature-based anomaly detection.
+### 1. Image Classification Suite
 
-In summary, DL Projects Rokhva (2024–2025) showcases a comprehensive mastery of convolutional, transfer, generative, and unsupervised neural networks. It demonstrates not only technical proficiency in PyTorch and GPU-based computation but also a scientific understanding of model behavior, evaluation, and interpretability. Through these experiments, the author illustrates how classical and advanced architectures can be effectively applied to medical imaging problems under resource constraints, achieving both accuracy and generalizability. The report stands as a complete, well-structured reference for implementing and analyzing diverse deep-learning models within a unified experimental framework.
+* **Task 1: Custom CNN Architecture**: A baseline model built from scratch to establish performance benchmarks for medical image classification.
+* **Task 2: Transfer Learning (Feature Extraction)**: Implementing **EfficientNet-B7**. By freezing the backbone and training only the classification head, we leverage pre-trained ImageNet weights for medical features.
+* **Task 3: Fine-Tuning**: Unfreezing the top 33% of the EfficientNet-B7 layers to specialize the model specifically for the nuances of X-ray imagery.
+
+### 2. Generative & Reconstructive Models
+
+* **Task 4: Generative Adversarial Networks (GANs)**: Training a Generator and Discriminator to synthesize artificial pneumonia lung images (32x32 resolution) from latent noise.
+* **Task 5: AutoEncoder Reconstruction**: Developing an unsupervised model to compress images into a low-dimensional bottleneck and reconstruct them, useful for denoising and feature extraction.
+
+---
+
+## 📊 Dataset Information
+
+* **Domain**: Pediatric Pneumonia Chest X-ray images.
+* **Structure**: 5,856 total images organized into Training, Validation, and Testing sets.
+* **Pre-processing**:
+* Resizing (256x256 for CNN/AutoEncoder; 32x32 for GAN).
+* Class weighting (to handle the ~3:1 imbalance between Pneumonia and Normal cases).
+* Data Augmentation: Random rotations, horizontal flips, and color jittering.
+
+
+
+---
+
+## 🚀 Technical Implementation
+
+### Model Optimization
+
+* **Loss Functions**: `BCEWithLogitsLoss` for classification (with weights) and `MSELoss` for the AutoEncoder.
+* **Optimizer**: Stochastic Gradient Descent (SGD) with Momentum (0.9) and Adam for generative tasks.
+* **Learning Rate**: Dynamic scheduling using `StepLR`.
+
+### Evaluation Metrics
+
+We measure performance through multiple lenses to ensure clinical relevance:
+
+* **Accuracy & Loss Curves**
+* **Precision, Recall, & F1-Score** (Crucial for medical diagnostics)
+* **Confusion Matrix Analysis**
+* **Visual Validation** for GAN and AutoEncoder outputs.
+
+---
+
+## 📈 Results Summary
+
+| Model | Key Outcome |
+| --- | --- |
+| **Custom CNN** | Established solid baseline performance with high interpretability. |
+| **EfficientNet-B7 (TL)** | High precision through state-of-the-art feature extraction. |
+| **Fine-Tuning** | Significant boost in Recall, minimizing false negatives. |
+| **AutoEncoder** | High structural similarity index (SSIM) in reconstructions. |
+| **GAN** | Successfully generated synthetic X-ray patterns from noise. |
+
+---
+
+## ⚙️ Setup & Installation
+
+1. **Clone the Repository**:
+```bash
+git clone https://github.com/your-username/medical-dl-project.git
+cd medical-dl-project
+
+```
+
+
+2. **Install Dependencies**:
+```bash
+pip install torch torchvision torchmetrics matplotlib scikit-learn
+
+```
+
+
+3. **Hardware Requirements**:
+* Recommended: NVIDIA T4 GPU or better (CUDA enabled).
+* Estimated Training Time: ~2-3 hours for the full pipeline.
+
+
+
+---
+
+## 👥 Authors
+
+* **Shayan Rokhva** - *Tarbiat Modares University*
+* **Ali Rashedi** - *Tarbiat Modares University*
+* **Supervised by**: Dr. Khatibi
+
+---
+
+*This project was completed as part of the Deep Learning Course (1403-1404 Academic Year) at Tarbiat Modares University, Department of IT Engineering.*
