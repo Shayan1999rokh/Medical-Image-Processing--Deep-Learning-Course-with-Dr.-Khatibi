@@ -741,7 +741,7 @@ This project was designed not only to achieve strong medical image classificatio
 within a single coherent deep learning research project.
 
 ---
-Readme is produced by GPT, Check the important info
+# !!! ReadMe is generate by GPT. Check the important information !!!
 
 
 
