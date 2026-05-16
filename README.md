@@ -702,29 +702,6 @@ Potential future improvements:
 Special thanks to:
 
 * Dr. Khatibi
-* Tarbiat Modares University
-* PyTorch community
-
----
-
-# 📜 License
-
-This project is intended for:
-
-* Educational purposes
-* Research purposes
-
-Please cite appropriately if used in academic work.
-
----
-
-# 📬 Contact
-
-For questions, collaborations, or academic discussions:
-
-* GitHub Issues
-* Pull Requests
-* Academic communication
 
 ---
 
